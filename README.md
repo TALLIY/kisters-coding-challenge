@@ -38,3 +38,5 @@ You can simulate a SynLogger using the included `./simulate_logger.py` script. T
 1. I chose not to write a lot of comments as they clutter up the code. However, I hope that every function and variable is clearly named to avoid ambiguity when reading the code. I will be more than happy to discuss my code in the technical interview.
 
 2. I wrote the code from my work github account by accident (mohamadaltalli-mamahealth) and I will update the readme from my personal github account (TALLIY). Both accounts are fully mine and no one else was involved in writing the code.
+
+3. The folder `data` was included in `.gitignore`. I removed it because it is assumed in the code that it is there. If not the the appropriate error will be thrown and catched. Of course `fs.mkdirSync` can also be used to create the directory if it is not there, which can be checked with `fs.existsSync`.
