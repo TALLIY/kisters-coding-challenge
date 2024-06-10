@@ -32,3 +32,9 @@ Keep in mind that the server could be reachable from the internet. Try to keep i
 You can simulate a SynLogger using the included `./simulate_logger.py` script. This script will connect to `localhost:8412` and transmit a random number of samples.
 
 [^1]: Valid choices are C/C++, Java, Python, Rust, TypeScript and zig.
+
+## Some remarks
+
+1. I chose not to write a lot of comments as they clutter up the code. However, I hope that every function and variable is clearly named to avoid ambiguity when reading the code. I will be more than happy to discuss my code in the technical interview.
+
+2. I wrote the code from my work github account by accident (mohamadaltalli-mamahealth) and I will update the readme from my personal github account (TALLIY). Both accounts are fully mine and no one else was involved in writing the code.
