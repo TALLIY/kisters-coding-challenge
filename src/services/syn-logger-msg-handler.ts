@@ -3,14 +3,12 @@ import {
   validateSynLoggerId,
   validateTimestamp,
 } from "../validation/validation";
-import {
-  SYN_LOGGER_MSG_REL_FILE_PATH,
-  SynLoggerMsgFileFormat,
-} from "./constants";
+import { SYN_LOGGER_MSG_FILE_PATH, SynLoggerMsgFileFormat } from "./constants";
 import * as fs from "fs";
 import * as path from "path";
 
-export const synLoggerMsgHandler = (msg: string) => {
+//handles the incoming message
+export const handleSynLoggerMsg =  (msg: string) => {
   const [unValidatedLoggerId, ...data] = msg.split("\n");
 
   const validatedLoggerId = validateSynLoggerId(unValidatedLoggerId);
@@ -24,7 +22,7 @@ export const synLoggerMsgHandler = (msg: string) => {
         (value) => validateNumeric(value, true) as number
       );
       const fileName = `${validatedLoggerId}-${validatedTimestamp}.${SynLoggerMsgFileFormat.JSON}`;
-      const filePath = path.join(SYN_LOGGER_MSG_REL_FILE_PATH, fileName);
+      const filePath = path.join(SYN_LOGGER_MSG_FILE_PATH, fileName);
       writeSynLoggerMsgToFile(filePath, validatedValues);
     }
   }
@@ -35,7 +33,10 @@ const writeSynLoggerMsgToFile = (
   values: (string | number)[]
 ) => {
   fs.writeFile(filePath, JSON.stringify(values), (err) => {
-    if (err) throw err;
-    console.log(`Saved ${filePath}`);
+    if (err) {
+      console.error("Error writing to file:", err);
+      return;
+    }
+    console.log(`Saved to ${filePath}`);
   });
 };

@@ -1,7 +1,8 @@
-import assert from "assert";
-import { isValidUTF8 } from "../types/utf-8-validate";
+import isValidUTF8 from "utf-8-validate";
 import { isLoggerIdRegex } from "./regex";
+import { assert } from "../util.ts/assert";
 
+//validate the utf-8 encoding of the buffer
 export const validateSynLoggerMsg = (
   buf: Buffer,
   customErrorMsg?: string
@@ -11,6 +12,7 @@ export const validateSynLoggerMsg = (
   return buf.toString("utf8");
 };
 
+//validate the logger id
 export const validateSynLoggerId = (
   loggerId: string,
   customErrorMsg?: string
@@ -23,13 +25,14 @@ export const validateSynLoggerId = (
   return loggerId;
 };
 
+//validate that a given string can be parsed into a float
 export const validateNumeric = (
   value: string,
   returnNumber?: boolean,
   customErrorMsg?: string
 ): string | number => {
   assert(
-    isNaN(parseFloat(value)) && isFinite(Number(value)),
+    !isNaN(parseFloat(value)) && isFinite(Number(value)),
     customErrorMsg ??
       `${customErrorMsg ?? "Expected a numeric value"}: ${value}`
   );
@@ -37,6 +40,7 @@ export const validateNumeric = (
   return returnNumber ? parseFloat(value) : value;
 };
 
+//validate that a given timestamp is a unix timestamp
 export const validateTimestamp = (
   timestamp: number | string,
   customErrorMsg?: string
@@ -51,18 +55,19 @@ export const validateTimestamp = (
     ) as number;
   } else {
     assert(
-      typeof timestamp === "number",
+      typeof timestamp === "number" && !isNaN(timestamp) && isFinite(timestamp),
       `${customErrorMsg ?? "Expected a numeric value"}: ${timestamp}`
     );
     numericTimestamp = timestamp as number;
   }
 
-  const date = new Date(numericTimestamp * 1000);
+  const date = new Date(numericTimestamp);
 
   assert(
-    date.getTime() > 0,
+    date && date.getTime() > 0,
     `${
-      customErrorMsg ?? "Given timestamp cannot be a negative number"
+      customErrorMsg ??
+      `The given timestamp is not a valid Unix timestamp: ${timestamp}`
     }: ${numericTimestamp}`
   );
 
