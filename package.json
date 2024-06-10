@@ -1,0 +1,15 @@
+{
+  "name": "synlogger",
+  "version": "1.0.0",
+  "description": "SynLogger is a data logger that periodically measures parameters of its environment (for example air temperature or humidity) and sends them to a server via a custom TCP protocol. Each sample consists of a timestamp (microseconds since UNIX epoch) and all measured values.",
+  "main": "main.js",
+  "scripts": {
+    "run": "ts-node src/main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
