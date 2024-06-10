@@ -1,6 +1,6 @@
 import isValidUTF8 from "utf-8-validate";
 import { isLoggerIdRegex } from "./regex";
-import { assert } from "../util.ts/assert";
+import { assert } from "../util/assert";
 
 //validate the utf-8 encoding of the buffer
 export const validateSynLoggerMsg = (
