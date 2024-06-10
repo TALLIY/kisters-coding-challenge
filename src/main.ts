@@ -17,7 +17,7 @@ const server = net.createServer((socket) => {
     const validatedSynLoggerMsg = validateSynLoggerMsg(buf);
     buffer += validatedSynLoggerMsg;
 
-    console.log(`Recieved: ${validatedSynLoggerMsg}`)
+    console.log(`Recieved: ${validatedSynLoggerMsg}`);
   });
 
   socket.on("end", () => {
@@ -25,7 +25,11 @@ const server = net.createServer((socket) => {
     try {
       handleSynLoggerMsg(buffer);
     } catch (error) {
-      console.log("An error has occured: ", error);
+      if (error instanceof Error) {
+        return {
+          message: `An error has occured: ${error.message}`,
+        };
+      }
     }
   });
 
@@ -33,7 +37,6 @@ const server = net.createServer((socket) => {
     console.error("Socket error:", err);
   });
 });
-
 
 server.listen(PORT, () => {
   console.log(`Server running at port ${PORT}`);
